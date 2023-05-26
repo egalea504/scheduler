@@ -8,6 +8,8 @@ import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Empty from "./Empty";
 import Show from "./Show";
+import Confirm from "./Confirm";
+import Status from "./Status";
 
 export default function Appointment(props) {
 
@@ -31,5 +33,7 @@ storiesOf("Appointment", module)
       name: "Sylvia Palmer", 
       avatar: "https://i.imgur.com/LpaY82x.png"}} 
    onEdit={action("onEdit")} 
-   onDelete={action("onDelete")} />);
+   onDelete={action("onDelete")} />)
+   .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
+   .add("Status", () => <Status message="Deleting" />);
 
