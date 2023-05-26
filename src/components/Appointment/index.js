@@ -10,6 +10,7 @@ import Empty from "./Empty";
 import Show from "./Show";
 import Confirm from "./Confirm";
 import Status from "./Status";
+import Error from "./Error";
 
 export default function Appointment(props) {
 
@@ -35,5 +36,6 @@ storiesOf("Appointment", module)
    onEdit={action("onEdit")} 
    onDelete={action("onDelete")} />)
    .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
-   .add("Status", () => <Status message="Deleting" />);
+   .add("Status", () => <Status message="Deleting" />)
+   .add("Error", () => <Error message="Could not delete appointment." onClose={action("onClose")} />);
 
