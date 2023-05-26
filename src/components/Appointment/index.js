@@ -7,6 +7,7 @@ import "components/Appointment/styles.scss";
 
 import Header from "./Header";
 import Empty from "./Empty";
+import Show from "./Show";
 
 export default function Appointment(props) {
 
@@ -22,5 +23,13 @@ storiesOf("Appointment", module)
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Header", () => <Header time="12pm" />)
-  .add("Empty", () => <Empty onAdd={action("onAdd")} />);
+  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
+  .add("Show", () => <Show 
+  student="Lydia Miller-Jones" 
+  interviewer={
+      { id: 1, 
+      name: "Sylvia Palmer", 
+      avatar: "https://i.imgur.com/LpaY82x.png"}} 
+   onEdit={action("onEdit")} 
+   onDelete={action("onDelete")} />);
 
