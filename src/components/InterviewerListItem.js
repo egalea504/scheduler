@@ -12,7 +12,7 @@ export default function InterviewerListItem(props) {
 
   if (props.selected) {
   return (
-  <li className={interviewerClass} onClick={() => props.setInterviewer(props.id)}>
+  <li className={interviewerClass} onClick={props.setInterviewer}>
   <img
     className="interviewers__item-image"
     src={props.avatar}
@@ -21,7 +21,7 @@ export default function InterviewerListItem(props) {
   {props.name}
   </li>
   ); } else { return (
-  <li className={interviewerClass} onClick={() => props.setInterviewer(props.id)}>
+  <li className={interviewerClass} onClick={props.setInterviewer}>
   <img
     className="interviewers__item-image"
     src={props.avatar}
