@@ -1,26 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import Axios from "axios";
 
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
 
 const appointments = {
   "1": {
@@ -63,7 +47,18 @@ const appointments = {
 
 export default function Application(props) {
 
-  const [day, setDay] = useState("Monday");
+  const [days, setDays] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(null); //used to change the selected day state
+
+  useEffect(() => {
+    Axios.get("http://localhost:8001/api/days")
+    .then((response) => {
+      console.log(response.data);
+      setDays([...response.data]);
+    })
+    .catch((error) =>
+    console.log("Error fetching days:", error));
+  },[]);
 
   return (
     <main className="layout">
@@ -77,8 +72,8 @@ export default function Application(props) {
 <nav className="sidebar__menu">
 <DayList
   days={days}
-  value={day}
-  onChange={setDay}
+  value={selectedDay}
+  onChange={setSelectedDay}
 />
 </nav>
 <img
