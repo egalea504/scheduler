@@ -30,10 +30,32 @@ export function getInterview(state, interview) {
       return null;
     }
     
-    if (key == interview.interviewer) {
+    if (Number(key) === interview.interviewer) {
      interview.interviewer = interviewers[key];
     }
   }
 
   return interview;
+}
+
+export function getInterviewersForDay(state, day) {
+  let interviewers = [];
+
+  const selectedDay = state.days.find((d) => d.name === day)
+
+  if (!selectedDay) {
+    return interviewers;
+  }
+  // loop through all appointments in day
+  selectedDay.appointments.forEach((appointmentId) => {
+    const appointment = state.appointments[appointmentId];
+
+    if (appointment.interview) {
+      const interviewerId = appointment.interview.interviewer;
+      const interviewer = state.interviewers[interviewerId];
+      interviewers.push(interviewer);
+    }
+  });
+
+  return interviewers;
 }

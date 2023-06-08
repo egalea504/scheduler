@@ -12,6 +12,7 @@ import Confirm from "./Confirm";
 import Status from "./Status";
 import Error from "./Error";
 import Form from "./Form";
+
 import useVisualMode from "hooks/useVisualMode";
 
 export default function Appointment(props) {
@@ -28,7 +29,7 @@ const { mode, transition, back } = useVisualMode(
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && ( <Show interview={props.interview} student={props.interview.student} interviewer={props.interview.interviewer} /> )}
-      {mode === CREATE && ( <Form interviewers={[]} onCancel={() => back(SHOW)} />)}
+      {mode === CREATE && ( <Form interviewers={props.interviewers} onCancel={() => back(SHOW)} />)}
     </article>
    )
 }
