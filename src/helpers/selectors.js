@@ -46,16 +46,9 @@ export function getInterviewersForDay(state, day) {
   if (!selectedDay) {
     return interviewers;
   }
-  // loop through all appointments in day
-  selectedDay.appointments.forEach((appointmentId) => {
-    const appointment = state.appointments[appointmentId];
-
-    if (appointment.interview) {
-      const interviewerId = appointment.interview.interviewer;
-      const interviewer = state.interviewers[interviewerId];
-      interviewers.push(interviewer);
-    }
-  });
+//map to find interviwerID and return interview linked
+interviewers = selectedDay.interviewers
+  .map((interviewerId) => state.interviewers[interviewerId])
 
   return interviewers;
 }
