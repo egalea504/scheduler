@@ -46,8 +46,11 @@ export function getInterviewersForDay(state, day) {
   if (!selectedDay) {
     return interviewers;
   }
-//map to find interviwerID and return interview linked
-interviewers = selectedDay.interviewers
+
+  const interviewersId = selectedDay.interviewers;
+
+// map to find interviwerID and return interview linked
+interviewers = interviewersId
   .map((interviewerId) => state.interviewers[interviewerId])
 
   return interviewers;
