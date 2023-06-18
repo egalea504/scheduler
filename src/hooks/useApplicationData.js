@@ -26,22 +26,35 @@ const [state, setState] = useState({
   interviewers: {}
 });
 
+// console.log(state.appointments);
 
 const setDay = day => setState({ ...state, day });
 
-// function spotsRemaining() {
-// console.log(state.appointments);
-//   const nullInterviews = Object.values(state.appointments)
-//   .filter(appointment => appointment.interview === null)
+function spotsRemaining(clonedState) {
 
-//   const selectedDay = state.days.find((d) => d.name === state.day)
-//   if (!selectedDay) {
-//     console.log("no day selected");
-//   } else {
-//     selectedDay["spots"] = nullInterviews.length;
-//     console.log(selectedDay.spots);
-//   };
-//   }
+  const selectedDay = clonedState.days.find((d) => d.name === clonedState.day)
+
+  // console.log(selectedDay);
+  if (!selectedDay) {
+    console.log("no day selected");
+  } else {
+    const bookedAppointments = Object.values(clonedState.appointments)
+    .filter((appointment) => appointment.interview !== null)
+    .filter((appointment) => selectedDay.appointments.includes(appointment.id));
+
+  const spotsRemaining = 5 - bookedAppointments.length;
+  console.log("this is spots remaining", spotsRemaining);
+
+  const updatedDays = clonedState.days.map((day) => {
+    if (day.id === selectedDay.id) {
+      return { ...day, spots: spotsRemaining };
+    }
+    return day;
+  });
+
+  return updatedDays;
+}
+  }
 
 async function bookInterview(id, interview) {
   // this will create {interview: ....} object which will nest student and interviewer
@@ -57,14 +70,19 @@ async function bookInterview(id, interview) {
     [id]: appointment
   };
   // should this be on .then , when I try, the page reloads and we don't want that
-  setState({
-    ...state,
-    appointments});
+  
+
+    console.log("setState in book is done", state);
 
     return Axios.put(`/api/appointments/${id}`, updatedInterview)
     .then(response => {
+      const copyState = {...state, appointments: appointments};
+      const updatedDays = spotsRemaining(copyState);
+      setState({
+        ...state,
+        appointments,
+        days: updatedDays});
       console.log(response);
-      // spotsRemaining(getAppointmentsForDay(state, state.day));
     })
     .catch(error => console.log("Error:", error));
     
@@ -83,13 +101,17 @@ async function cancelInterview(id, interview) {
 
   setState({
     ...state,
-    appointments
-  })
-  console.log("something");
+    appointments});
+
       return Axios.delete(`/api/appointments/${id}`, interview)
       .then(response => {
-        console.log(response);
-        // spotsRemaining(getAppointmentsForDay(state, state.day));
+        const copyState = {...state, appointments: appointments};
+      const updatedDays = spotsRemaining(copyState);
+      setState({
+        ...state,
+        appointments,
+        days: updatedDays});
+      console.log(response);
       })
       .catch(error => {
       console.error('Error:', error);

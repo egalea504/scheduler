@@ -49,13 +49,11 @@ function save(name, interviewer) {
 function deleteInterview() {
 
   transition(DELETE, true);
-  console.log("this is the ball rolling");
 
     props
     .cancelInterview(props.id)
     .then(() => {
     transition(EMPTY);
-    console.log("this is empty now")
   })
     .catch(error => {
       console.log(error)
@@ -74,7 +72,7 @@ const edit = () => {
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && ( <Show interview={props.interview} student={props.interview.student} interviewer={props.interview.interviewer} onDelete={() => transition(CONFIRM)} onEdit={edit}/> )}
       {mode === CREATE && ( <Form interviewers={props.interviewers} onCancel={() => back(SHOW)} onSave={save} />)}
-      {mode === SAVING && < Status message=""/>}
+      {mode === SAVING && < Status message="Saving"/>}
       {mode === CONFIRM && <Confirm message="Are you sure you would like to delete?" onCancel={() => back(SHOW)} onSave={deleteInterview} />}
       {mode === DELETE && < Status message="Deleting" />}
       {mode === EDIT && <Form student={props.interview.student} interviewer={props.interview.interviewer} interviewers={props.interviewers} onCancel={() => back(SHOW)} onSave={save} />}
