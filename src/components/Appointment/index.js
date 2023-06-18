@@ -40,10 +40,9 @@ function save(name, interviewer) {
     .then(() => {
       transition(SHOW);
     })
-    .catch(error => {
-      console.log(error);
-      transition(ERROR_SAVE, true);
-    });
+    .catch((error) => 
+      // console.log("ERROR!!", error));
+      transition(ERROR_SAVE, true));
 }
 
 function deleteInterview() {
@@ -56,7 +55,6 @@ function deleteInterview() {
     transition(EMPTY);
   })
     .catch(error => {
-      console.log(error)
       transition(ERROR_DELETE, true);
     });
 }
@@ -77,7 +75,7 @@ const edit = () => {
       {mode === DELETE && < Status message="Deleting" />}
       {mode === EDIT && <Form student={props.interview.student} interviewer={props.interview.interviewer} interviewers={props.interviewers} onCancel={() => back(SHOW)} onSave={save} />}
       {mode === ERROR_SAVE && <Error message="There was an issue with booking your appointment." onClose={() => transition(EMPTY)} />}
-      {mode === ERROR_DELETE && <Error message="Could not cancel appointment." onClose={() => transition(SHOW)} />}
+      {mode === ERROR_DELETE && <Error message="Could not cancel appointment." onClose={back} />}
     </article>
    )
 }

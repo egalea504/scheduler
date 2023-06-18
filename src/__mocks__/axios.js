@@ -80,7 +80,9 @@ export default {
       }
   }),
     put: jest.fn(url => {
-      if (url === `/api/appointments/1`) {
+      const appointmentId = url.split("/").pop();
+    const appointment = fixtures.appointments[appointmentId];
+    if (appointment) {
         return Promise.resolve({
           status: 204,
           statusText: "No Content"
@@ -89,7 +91,9 @@ export default {
     }),
 
     delete: jest.fn(url => {
-      if (url === `/api/appointments/2`) {
+      const appointmentId = url.split("/").pop();
+      const appointment = fixtures.appointments[appointmentId];
+      if (appointment) {
         return Promise.resolve({
           status: 204,
           statusText: "No Content"

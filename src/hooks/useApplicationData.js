@@ -42,8 +42,7 @@ function spotsRemaining(clonedState) {
     .filter((appointment) => appointment.interview !== null)
     .filter((appointment) => selectedDay.appointments.includes(appointment.id));
 
-  const spotsRemaining = 5 - bookedAppointments.length;
-  console.log("this is spots remaining", spotsRemaining);
+  const spotsRemaining = selectedDay.appointments.length - bookedAppointments.length;
 
   const updatedDays = clonedState.days.map((day) => {
     if (day.id === selectedDay.id) {
@@ -53,10 +52,10 @@ function spotsRemaining(clonedState) {
   });
 
   return updatedDays;
-}
   }
+} 
 
-async function bookInterview(id, interview) {
+const bookInterview = (id, interview) => {
   // this will create {interview: ....} object which will nest student and interviewer
   // had a problem with the PUT function it was pushing {student:, interviewer:} instead of {interview: student:, interviewer}
   const updatedInterview = {interview: {...interview}};
@@ -69,10 +68,6 @@ async function bookInterview(id, interview) {
     ...state.appointments,
     [id]: appointment
   };
-  // should this be on .then , when I try, the page reloads and we don't want that
-  
-
-    console.log("setState in book is done", state);
 
     return Axios.put(`/api/appointments/${id}`, updatedInterview)
     .then(response => {
@@ -83,12 +78,10 @@ async function bookInterview(id, interview) {
         appointments,
         days: updatedDays});
       console.log(response);
-    })
-    .catch(error => console.log("Error:", error));
-    
-  }
+    });  
+  };
 
-async function cancelInterview(id, interview) {
+const cancelInterview = (id, interview) => {
   const appointment = {
     ...state.appointments[id],
     interview: null
@@ -99,24 +92,17 @@ async function cancelInterview(id, interview) {
     [id]: appointment
   }
 
-  setState({
-    ...state,
-    appointments});
-
       return Axios.delete(`/api/appointments/${id}`, interview)
       .then(response => {
         const copyState = {...state, appointments: appointments};
-      const updatedDays = spotsRemaining(copyState);
-      setState({
-        ...state,
-        appointments,
-        days: updatedDays});
-      console.log(response);
-      })
-      .catch(error => {
-      console.error('Error:', error);
-    });
-}
+        const updatedDays = spotsRemaining(copyState);
+        setState({
+          ...state,
+          appointments,
+          days: updatedDays});
+        console.log(response);
+        });
+    };
 
-return {state, setDay, bookInterview, cancelInterview};
+  return {state, setDay, bookInterview, cancelInterview};
 }
