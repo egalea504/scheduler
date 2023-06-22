@@ -73,8 +73,8 @@ const edit = () => {
       {mode === SAVING && < Status message="Saving"/>}
       {mode === CONFIRM && <Confirm message="Are you sure you would like to delete?" onCancel={() => back(SHOW)} onSave={deleteInterview} />}
       {mode === DELETE && < Status message="Deleting" />}
-      {mode === EDIT && <Form student={props.interview.student} interviewer={props.interview.interviewer} interviewers={props.interviewers} onCancel={() => back(SHOW)} onSave={save} />}
-      {mode === ERROR_SAVE && <Error message="There was an issue with booking your appointment." onClose={() => transition(EMPTY)} />}
+      {mode === EDIT && <Form student={props.interview.student} interviewer={props.interview.interviewer.id} interviewers={props.interviewers} onCancel={() => back(SHOW)} onSave={save} />}
+      {mode === ERROR_SAVE && <Error message="There was an issue with booking your appointment." onClose={back} />}
       {mode === ERROR_DELETE && <Error message="Could not cancel appointment." onClose={back} />}
     </article>
    )
