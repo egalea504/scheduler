@@ -24,6 +24,14 @@ npm test
 npm run storybook
 ```
 
+## Dev Dependencies
+axios
+classnames
+normalize.css
+react
+react-dom
+react-scripts
+
 ## User Interface Preview
 
 Main View Scheduler Application
