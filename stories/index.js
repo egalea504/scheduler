@@ -11,6 +11,13 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment/index.js";
+import Header from 'components/Appointment/Header';
+import Empty from 'components/Appointment/Empty';
+import Show from 'components/Appointment/Show';
+import Confirm from 'components/Appointment/Confirm';
+import Status from 'components/Appointment/Status';
+import Error from 'components/Appointment/Error';
+import Form from 'components/Appointment/Form';
 
 storiesOf("Button", module)
   .addParameters({
@@ -158,16 +165,14 @@ storiesOf("Button", module)
       <Appointment time="5pm" />
     </Fragment>
   ))
-
-  storiesOf("Appointment", module)
-  .addParameters({
-    backgrounds: [{ name: "white", value: "#fff", default: true }]
-  })
-  .add("Appointment", () => <Appointment key='unique-appointment-key' />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />)
-  .add("Header", () => <Header time="12pm" />)
-  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
-  .add("Show", () => <Show 
+  .add("Header", () => 
+  <Header time="12pm" />
+  )
+  .add("Empty", () => 
+  <Empty onAdd={action("onAdd")} />
+  )
+  .add("Show", () => 
+  <Show 
   key='unique-show-key'
   student="Lydia Miller-Jones" 
   interviewer={
@@ -175,10 +180,21 @@ storiesOf("Button", module)
       name: "Sylvia Palmer", 
       avatar: "https://i.imgur.com/LpaY82x.png"}} 
    onEdit={action("onEdit")} 
-   onDelete={action("onDelete")} />)
-   .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
-   .add("Status", () => <Status message="Deleting" />)
-   .add("Error", () => <Error message="Could not delete appointment." onClose={action("onClose")} />)
+   onDelete={action("onDelete")} />
+   )
+   .add("Confirm", () => 
+   <Confirm 
+   message="Delete the appointment?" 
+   onConfirm={action("onConfirm")} 
+   onCancel={action("onCancel")} />
+   )
+   .add("Status", () => 
+   <Status message="Deleting" />
+   )
+   .add("Error", () => <Error 
+   message="Could not delete appointment." 
+   onClose={action("onClose")} />
+   )
    .add("Edit", () => <Form 
    key='unique-add-key'
    student="Eliza Galea" 
@@ -191,7 +207,8 @@ storiesOf("Button", module)
       { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
     ]} 
    onSave={action("onSave")} 
-   onCancel={action("onCancel")} />)
+   onCancel={action("onCancel")} />
+   )
    .add("Create", () => <Form 
    key='unique-create-key'
    interviewers={[
@@ -202,6 +219,5 @@ storiesOf("Button", module)
       { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
     ]} 
     onSave={action("onSave")} 
-    onCancel={action("onCancel")} />)
-
- 
+    onCancel={action("onCancel")} />
+    )
