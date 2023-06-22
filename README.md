@@ -25,11 +25,11 @@ npm run storybook
 ```
 
 ## Dev Dependencies
-axios
-classnames
-normalize.css
-react
-react-dom
+axios <br />
+classnames <br />
+normalize.css <br />
+react <br />
+react-dom <br />
 react-scripts
 
 ## User Interface Preview
